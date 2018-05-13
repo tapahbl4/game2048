@@ -1,0 +1,21 @@
+.wrapper {
+    margin: 0 auto;
+}
+
+.field {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.cell {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+    border: 5px solid silver;
+    margin: 5px;
+    border-radius: 10%;
+    font-size: 100px;
+    font-family: Helvetica, sans-serif;
+}
