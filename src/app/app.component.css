@@ -1,21 +1,75 @@
+.container-fluid.root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*height: 100%;*/
+}
+
+.square-container {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+}
+
+.square-inner {
+    position:  absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
 .wrapper {
+    width: 100%;
+}
+
+.wrapper > div {
+    display: block;
+    max-width: 768px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .field {
+    max-height: 768px;
+    height: 100%;
+}
+
+.field .str {
+    height: calc(100% / 4);
+}
+
+.cell-wrap {
     display: inline-block;
-    margin: 0 auto;
+    box-sizing: padding-box;
+    width: calc(100% / 4);
+    height: 100%;
 }
 
 .cell {
     display: inline-block;
-    width: 200px;
-    height: 200px;
-    line-height: 200px;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
     text-align: center;
     border: 5px solid silver;
     margin: 5px;
     border-radius: 10%;
-    font-size: 100px;
     font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 7em;
+}
+
+.logo {
+    font-size: 3vw;
+    font-weight: bold;
+}
+
+.control-panel {
+    padding: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .cell {
+        font-size: 2.6em;
+    }
 }

@@ -1,10 +1,23 @@
-<div class="wrapper">
-  <div class="field">
-    <div class="str" *ngFor="let str of field;">
-      <div class="cell" *ngFor="let item of str;">{{item != 0 ? item : '&nbsp;'}}</div>
+<div class="container-fluid root">
+    <div class="wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm text-center text-sm-left">
+                    <span class="logo">2048</span>
+                </div>
+                <div class="col-sm text-left text-sm-right control-panel">
+                    <button type="button" class="btn btn-outline-primary" (click)="initApp()">Restart</button>
+                </div>
+            </div>
+        </div>
+        <div class="square-container">
+            <div class="field square-inner">
+                <div class="str" *ngFor="let str of field;">
+                    <div class="cell-wrap" *ngFor="let item of str;">
+                        <div class="cell">{{item != 0 ? item : '&nbsp;'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div>
-    <button (click)="initApp()">Restart</button>
-  </div>
 </div>
