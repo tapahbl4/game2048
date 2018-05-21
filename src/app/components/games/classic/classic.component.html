@@ -1,0 +1,11 @@
+<div class="wrapper">
+  <div class="square-container">
+    <div class="field square-inner">
+      <div class="str" *ngFor="let str of field;">
+        <div class="cell-wrap" *ngFor="let item of str;">
+          <div class="cell {{item !==0 ? 'number-' + item.toString().length : 'empty'}} {{item !== 0 ? 'value-' + item : ''}}">{{item != 0 ? item : '&nbsp;'}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

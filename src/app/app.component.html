@@ -5,19 +5,30 @@
                 <div class="col-sm text-center text-sm-left">
                     <span class="logo">2048</span>
                 </div>
-                <div class="col-sm text-left text-sm-right control-panel">
-                    <button type="button" class="btn btn-outline-primary" (click)="initApp()">Restart</button>
+                <div class="col-sm text-left text-sm-right control-panel" *ngIf="!chooseScreen">
+                    <button type="button" class="btn btn-outline-primary btn-sm" (click)="chooseScreen = true; gameMode = '';">Back</button>
+                    <!--<button type="button" class="btn btn-outline-primary btn-sm" (click)="initApp()">Restart</button>-->
+                    <!--<button type="button" class="btn btn-outline-primary btn-sm" (click)="undo()" *ngIf="prevField !== null">Undo</button>-->
+                </div>
+                <div class="col-sm text-left text-sm-right control-panel" *ngIf="chooseScreen">
+                    <button type="button" class="btn btn-outline-primary btn-sm" (click)="showOverlay('Test overlay', 'Message')">Test overlay</button>
                 </div>
             </div>
         </div>
-        <div class="square-container">
-            <div class="field square-inner">
-                <div class="str" *ngFor="let str of field;">
-                    <div class="cell-wrap" *ngFor="let item of str;">
-                        <div class="cell">{{item != 0 ? item : '&nbsp;'}}</div>
-                    </div>
-                </div>
+        <div class="content row">
+            <div class="col">
+                <choose *ngIf="chooseScreen" (chooseGameMode)="setGameMode($event)"></choose>
+                <classic-game *ngIf="!chooseScreen && gameMode === 'classic'" [size]="size"></classic-game>
             </div>
+        </div>
+    </div>
+    <div class="copyright"><a href="//github.com/tapahbl4" target="_blank">Dmitry Marchenko</a></div>
+    <div class="overlay" *ngIf="isVisibleOverlay">
+        <div class="title">{{overlayTitle}}</div>
+        <div class="message">{{overlayMessage}}</div>
+        <div class="buttons">
+            <button type="button" class="btn btn-secondary" (click)="isVisibleOverlay = false;">Ok</button>
+            <button type="button" class="btn btn-secondary" *ngIf="isVisibleOverlayCancelButton" (click)="isVisibleOverlay = false;">Cancel</button>
         </div>
     </div>
 </div>
