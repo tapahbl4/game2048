@@ -1,5 +1,7 @@
-import {Component, HostListener, Input} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, ViewChild} from '@angular/core';
 import { HelperService } from "./helper.service";
+import {OverlayComponent} from "./components/control/overlay/overlay.component";
+import {ClassicComponent} from "./components/games/classic/classic.component";
 
 @Component({
     selector: 'app-root',
@@ -7,25 +9,15 @@ import { HelperService } from "./helper.service";
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    isVisibleOverlay: boolean = false;
-    isVisibleOverlayCancelButton: boolean = false;
-    overlayTitle: string = '';
-    overlayMessage: string = '';
-
     chooseScreen: boolean = true;
 
     gameMode: string = '';
     size: number;
+    @ViewChild('overlayComponent') overlay: OverlayComponent;
+    @ViewChild('classicGameComponent') classicGame: ClassicComponent;
 
     constructor(helper: HelperService) {
-
-    }
-
-    showOverlay(title: string, message: string, isVisibleCancelButton: boolean = false) {
-        this.overlayTitle = title;
-        this.overlayMessage = message;
-        this.isVisibleOverlay = true;
-        this.isVisibleOverlayCancelButton = isVisibleCancelButton;
+        //
     }
 
     setGameMode(gameInfo){
@@ -33,6 +25,27 @@ export class AppComponent {
         this.size = gameInfo.size;
 
         this.chooseScreen = false;
-        console.log(gameInfo);
+    }
+
+    eventTrigger(event, type: string) {
+        switch (type) {
+            case 'gameOver':
+                this.overlay.show('Game Over', "Try again?", true);
+                break;
+
+            case 'gameOverOk':
+                this.restart();
+                break;
+
+            case 'gameOverCancel':
+                this.chooseScreen = true;
+                break;
+        }
+    }
+
+    restart() {
+        if (this.gameMode === 'classic') {
+            this.classicGame.initGame();
+        }
     }
 }

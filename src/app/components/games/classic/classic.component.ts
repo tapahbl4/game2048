@@ -1,5 +1,6 @@
-import {Component, HostListener, Input, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
 import { HelperService } from "../../../helper.service";
+import { GameInterface } from "../game.interface";
 
 export enum KEY_CODE {
     RIGHT_ARROW = 39,
@@ -15,16 +16,16 @@ const EMPTY = 0;
     templateUrl: './classic.component.html',
     styleUrls: ['./classic.component.css']
 })
-export class ClassicComponent {
+export class ClassicComponent implements GameInterface {
     field: any[];
     prevField: any[] = null;
     @Input('size') dimension: number = 4;
+    @Output() gameOverEvent: EventEmitter<any> = new EventEmitter<any>();
 
     touchX: number = 0;
     touchY: number = 0;
 
     constructor(helper: HelperService) {
-        console.log(this.dimension);
         this.initGame();
     }
 
@@ -55,7 +56,7 @@ export class ClassicComponent {
 
     @HostListener('window:keyup', ['$event'])
     keyEvent(event: KeyboardEvent) {
-        if ([KEY_CODE.LEFT_ARROW, KEY_CODE.RIGHT_ARROW, KEY_CODE.UP_ARROW, KEY_CODE.DOWN_ARROW].indexOf(event.keyCode) !== -1) {
+        if ([KEY_CODE.LEFT_ARROW, KEY_CODE.RIGHT_ARROW, KEY_CODE.UP_ARROW, KEY_CODE.DOWN_ARROW].includes(event.keyCode)) {
             let isMoved = this.moveCells(event.keyCode);
 
             if (isMoved) {
@@ -67,7 +68,7 @@ export class ClassicComponent {
             }
 
             if (this.isGameOver()) {
-                console.log('game over');
+                this.gameOverEvent.emit(true);
             }
         }
     }
@@ -92,7 +93,6 @@ export class ClassicComponent {
             }
 
             if (direction) {
-                console.log('move');
                 let isMoved = this.moveCells(direction);
 
                 if (isMoved) {
@@ -127,30 +127,15 @@ export class ClassicComponent {
 
     // TODO
     isGameOver(): boolean {
-        let result = false;
+        let result = true;
 
-        for (let i = 0; i < this.dimension && !result; i++) {
-            for (let j = 0; j < this.dimension && !result; j++) {
-                let siblings: any[] = [];
-
-                if (i > 0) {
-                    siblings.push(this.field[i - 1][j]);
-                }
-
-                if (j > 0) {
-                    siblings.push(this.field[i][j - 1]);
-                }
-
-                if (i < this.dimension) {
-                    siblings.push(this.field[i + 1][j]);
-                }
-
-                if (j < this.dimension) {
-                    siblings.push(this.field[i][j + 1]);
-                }
-
-                if (siblings.indexOf(this.field[i][j]) === -1 && this.field[i][j] !== EMPTY) {
-                    result = true;
+        for (let i = 0; i < this.dimension && result; i++) {
+            for (let j = 0; j < this.dimension && result; j++) {
+                if (this.field[i][j] === EMPTY
+                    || (i + 1 < this.dimension && this.field[i][j] === this.field[i + 1][j])
+                    || (j + 1 < this.dimension && this.field[i][j] === this.field[i][j + 1]))
+                {
+                    result = false;
                 }
             }
         }
