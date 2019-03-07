@@ -1,6 +1,6 @@
 import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
-import { HelperService } from "../../../helper.service";
-import { GameInterface } from "../game.interface";
+import { HelperService } from '../../../helper.service';
+import { GameInterface } from '../game.interface';
 
 export enum KEY_CODE {
     RIGHT_ARROW = 39,

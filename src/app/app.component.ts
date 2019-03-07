@@ -1,7 +1,7 @@
 import {Component, EventEmitter, HostListener, Input, ViewChild} from '@angular/core';
-import { HelperService } from "./helper.service";
-import {OverlayComponent} from "./components/control/overlay/overlay.component";
-import {ClassicComponent} from "./components/games/classic/classic.component";
+import { HelperService } from './helper.service';
+import {OverlayComponent} from './components/control/overlay/overlay.component';
+import {ClassicComponent} from './components/games/classic/classic.component';
 
 @Component({
     selector: 'app-root',
@@ -9,9 +9,9 @@ import {ClassicComponent} from "./components/games/classic/classic.component";
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    chooseScreen: boolean = true;
+    chooseScreen = true;
 
-    gameMode: string = '';
+    gameMode = '';
     size: number;
     @ViewChild('overlayComponent') overlay: OverlayComponent;
     @ViewChild('classicGameComponent') classicGame: ClassicComponent;
@@ -20,7 +20,7 @@ export class AppComponent {
         //
     }
 
-    setGameMode(gameInfo){
+    setGameMode(gameInfo) {
         this.gameMode = gameInfo.mode;
         this.size = gameInfo.size;
 
@@ -30,7 +30,7 @@ export class AppComponent {
     eventTrigger(event, type: string) {
         switch (type) {
             case 'gameOver':
-                this.overlay.show('Game Over', "Try again?", true);
+                this.overlay.show('Game Over', 'Try again?', true);
                 break;
 
             case 'gameOverOk':
